@@ -5,14 +5,17 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pokemon: [{ name: "Pikachu" }, { name: "Snorlax" }],
+      shoes_data: [],
     };
   }
 
   componentDidMount() {
     fetch("http://127.0.0.1:8000/api-auth/shoe/")
       .then((res) => res.json())
-      .then((data) => this.setState({ pokemon: data }));
+      .then((data) => {
+        console.log(data);
+        this.setState({ shoes_data: data });
+      });
   }
 
   render() {
@@ -22,15 +25,15 @@ class App extends React.Component {
           <h1>Shoes</h1>
         </header>
         <ul>
-          {this.state.pokemon.map((p) => {
+          {this.state.shoes_data.map((shoe) => {
             return (
-              <li>
-                <p>Size: {p.size}</p>
-                <p>Brand: {p.brand_name}</p>
-                <p>Manufacturer: {p.manufacturer}</p>
-                <p>Color: {p.colors}</p>
-                <p>Type: {p.shoe_type}</p>
-                <p>Fasten: {p.fasten_type}</p>
+              <li key={shoe.id}>
+                <p>Size: {shoe.size}</p>
+                <p>Brand: {shoe.brand_name}</p>
+                <p>Manufacturer: {shoe.manufacturer}</p>
+                <p>Color: {shoe.colors}</p>
+                <p>Type: {shoe.shoe_type}</p>
+                <p>Fasten: {shoe.fasten_type}</p>
               </li>
             );
           })}
